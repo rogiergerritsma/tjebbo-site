@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tjebbo Gerritsma — acteur</title>
+<meta name="description" content="Tjebbo Gerritsma, acteur. Film, televisie en theater.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@400;700;900&family=Instrument+Sans:wght@400;500&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<style>
+:root{
+  --zwart:#0B0A09;
+  --roet:#151311;
+  --been:#EFE9DF;
+  --grijs:#8C857B;
+  --blauw:#6CCBFF;
+  --spot-x:50%;
+  --spot-y:40%;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  background:var(--zwart);color:var(--been);
+  font-family:"Instrument Sans",system-ui,sans-serif;
+  font-size:17px;line-height:1.6;
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+a{color:inherit}
+::selection{background:var(--blauw);color:var(--zwart)}
+
+/* filmkorrel */
+.korrel{
+  position:fixed;inset:-50%;pointer-events:none;z-index:50;opacity:.09;
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+  animation:korrel 0.6s steps(4) infinite;
+}
+@keyframes korrel{
+  0%{transform:translate(0,0)}25%{transform:translate(-3%,2%)}
+  50%{transform:translate(2%,-3%)}75%{transform:translate(-2%,-1%)}100%{transform:translate(0,0)}
+}
+
+/* navigatie */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:40;
+  display:flex;justify-content:space-between;align-items:center;
+  padding:22px clamp(20px,4vw,48px);
+  mix-blend-mode:difference;
+}
+.monogram{
+  font-family:"Instrument Serif",serif;font-style:italic;font-size:28px;
+  text-decoration:none;letter-spacing:-.02em;
+}
+nav ul{display:flex;gap:clamp(16px,3vw,36px);list-style:none}
+nav a{
+  font-family:"Big Shoulders Display",sans-serif;font-weight:700;
+  text-transform:uppercase;letter-spacing:.14em;font-size:14px;text-decoration:none;
+}
+nav a:hover{color:var(--blauw)}
+
+/* opening */
+.opening{
+  position:relative;min-height:100svh;overflow:hidden;
+  display:grid;place-items:center;
+}
+.opening::before{ /* volgspot */
+  content:"";position:absolute;inset:0;z-index:2;pointer-events:none;
+  background:radial-gradient(circle 34vmax at var(--spot-x) var(--spot-y),
+    rgba(0,0,0,0) 0%, rgba(11,10,9,.55) 45%, rgba(11,10,9,.97) 75%);
+}
+.portret{
+  position:absolute;right:clamp(0px,6vw,120px);bottom:0;z-index:1;
+  width:min(48vw,620px);height:auto;display:block;
+  -webkit-mask-image:linear-gradient(180deg,#000 70%,transparent 100%);
+          mask-image:linear-gradient(180deg,#000 70%,transparent 100%);
+  filter:contrast(1.05);
+  animation:binnen 2.2s cubic-bezier(.2,.7,.2,1) both;
+}
+@keyframes binnen{from{opacity:0;transform:translateY(30px) scale(1.03)}to{opacity:1;transform:none}}
+.naam{
+  position:relative;z-index:3;width:100%;
+  padding:0 clamp(20px,4vw,48px);
+}
+.naam .label{
+  font-family:"Big Shoulders Display",sans-serif;font-weight:700;
+  letter-spacing:.35em;text-transform:uppercase;font-size:13px;color:var(--blauw);
+  margin-bottom:2vh;display:block;
+}
+.naam h1{
+  font-family:"Instrument Serif",serif;font-weight:400;
+  font-size:clamp(84px,19vw,300px);line-height:.82;letter-spacing:-.045em;
+}
+.naam h1 em{display:block;padding-left:.55em}
+.naam h1 .achter{
+  display:block;font-style:normal;
+  font-family:"Big Shoulders Display",sans-serif;font-weight:900;
+  text-transform:uppercase;letter-spacing:-.01em;
+  font-size:.62em;line-height:.9;
+  -webkit-text-stroke:1.5px var(--been);color:transparent;
+}
+.scroll{
+  position:absolute;bottom:26px;left:clamp(20px,4vw,48px);z-index:3;
+  font-family:"Big Shoulders Display",sans-serif;letter-spacing:.3em;
+  text-transform:uppercase;font-size:12px;color:var(--grijs);
+  display:flex;align-items:center;gap:12px;
+}
+.scroll::after{content:"";width:60px;height:1px;background:var(--grijs);animation:lijn 2.4s ease-in-out infinite;transform-origin:left}
+@keyframes lijn{0%,100%{transform:scaleX(.2)}50%{transform:scaleX(1)}}
+
+/* lichtkrant */
+.lichtkrant{
+  border-top:1px solid #2a2622;border-bottom:1px solid #2a2622;
+  overflow:hidden;white-space:nowrap;padding:18px 0;background:var(--roet);
+}
+.lichtkrant div{display:inline-block;animation:krant 48s linear infinite}
+.lichtkrant span{
+  font-family:"Instrument Serif",serif;font-style:italic;font-size:clamp(26px,3.4vw,44px);
+  padding:0 .6em;
+}
+.lichtkrant b{color:var(--blauw);font-weight:400;font-size:.6em;vertical-align:middle}
+@keyframes krant{to{transform:translateX(-50%)}}
+
+/* secties */
+section{padding:clamp(80px,14vh,160px) clamp(20px,4vw,48px)}
+.akte{
+  font-family:"Big Shoulders Display",sans-serif;font-weight:700;
+  letter-spacing:.35em;text-transform:uppercase;font-size:13px;color:var(--blauw);
+  display:flex;align-items:center;gap:16px;margin-bottom:48px;
+}
+.akte::after{content:"";flex:1;height:1px;background:#2a2622;max-width:240px}
+
+/* over */
+.over{display:grid;grid-template-columns:1fr;gap:48px;max-width:1300px;margin:0 auto}
+.over blockquote{
+  font-family:"Instrument Serif",serif;font-size:clamp(34px,5vw,72px);
+  line-height:1.02;letter-spacing:-.025em;
+}
+.over blockquote em{color:var(--blauw)}
+.over .tekst{max-width:58ch;color:#cfc8bd}
+.over .tekst p+p{margin-top:1.1em}
+.feiten{display:flex;gap:40px;margin-top:40px;flex-wrap:wrap}
+.feiten div{border-top:1px solid #2a2622;padding-top:14px;min-width:110px}
+.feiten strong{
+  display:block;font-family:"Big Shoulders Display",sans-serif;font-weight:900;
+  font-size:52px;line-height:1;color:var(--been);
+}
+.feiten small{font-size:13px;color:var(--grijs);letter-spacing:.04em}
+@media(min-width:900px){
+  .over{grid-template-columns:1.2fr 1fr;align-items:end}
+}
+
+/* aftiteling */
+.titels{max-width:1100px;margin:0 auto}
+.tabs{display:flex;gap:8px;margin-bottom:56px;flex-wrap:wrap}
+.tabs button{
+  background:none;border:1px solid #3a352f;color:var(--grijs);cursor:pointer;
+  font-family:"Big Shoulders Display",sans-serif;font-weight:700;
+  letter-spacing:.2em;text-transform:uppercase;font-size:14px;
+  padding:10px 20px;border-radius:999px;transition:.25s;
+}
+.tabs button:hover{color:var(--been);border-color:var(--been)}
+.tabs button[aria-pressed="true"]{background:var(--been);color:var(--zwart);border-color:var(--been)}
+.rol{
+  display:grid;grid-template-columns:1fr auto;align-items:baseline;gap:6px 24px;
+  padding:22px 0;border-bottom:1px solid #221f1b;
+  transition:padding .35s ease, background .35s ease;
+}
+.rol:hover{padding-left:18px;background:linear-gradient(90deg,rgba(108,203,255,.10),transparent 60%)}
+.rol h3{
+  font-family:"Instrument Serif",serif;font-weight:400;
+  font-size:clamp(28px,4vw,52px);line-height:1;letter-spacing:-.02em;
+}
+.rol:hover h3{font-style:italic}
+.rol .jaar{
+  font-family:"Big Shoulders Display",sans-serif;font-weight:400;font-size:20px;color:var(--grijs);
+  font-variant-numeric:tabular-nums;
+}
+.rol .als{
+  grid-column:1/-1;font-size:14px;color:var(--grijs);letter-spacing:.03em;
+}
+.rol .als b{color:var(--been);font-weight:500}
+.rol.verborgen{display:none}
+.voetnoot{margin-top:32px;font-size:13px;color:var(--grijs)}
+
+/* showreel */
+.reel{max-width:1300px;margin:0 auto}
+.doek{
+  position:relative;aspect-ratio:16/9;background:#000;overflow:hidden;
+  display:grid;place-items:center;cursor:pointer;
+  border:1px solid #221f1b;
+}
+.doek::before{
+  content:"";position:absolute;inset:0;
+  background:radial-gradient(ellipse at center,#26201b 0%,#000 70%);
+}
+.doek .afteller{
+  position:absolute;inset:0;display:grid;place-items:center;
+}
+.doek .afteller svg{width:min(50%,380px);height:auto;opacity:.5}
+.speel{
+  position:relative;z-index:2;width:96px;height:96px;border-radius:50%;
+  border:1.5px solid var(--been);display:grid;place-items:center;transition:.3s;
+}
+.doek:hover .speel{background:var(--blauw);border-color:var(--blauw);transform:scale(1.08)}
+.speel svg{width:28px;height:28px;margin-left:4px}
+.doek .ondertitel{
+  position:absolute;bottom:24px;left:0;right:0;text-align:center;z-index:2;
+  font-family:"Instrument Serif",serif;font-style:italic;font-size:20px;color:#d9d2c6;
+}
+#sweep{transform-origin:190px 190px;animation:sweep 3s linear infinite}
+@keyframes sweep{to{transform:rotate(360deg)}}
+
+
+/* voicereel */
+.stemvak{max-width:1300px;margin:0 auto}
+.stemkop{display:grid;gap:24px;margin-bottom:56px}
+.stemkop h2{font-family:"Instrument Serif",serif;font-weight:400;font-size:clamp(56px,9vw,140px);line-height:.9;letter-spacing:-.04em}
+.stemkop h2 em{color:var(--blauw)}
+.stemkop p{color:#cfc8bd;max-width:44ch}
+@media(min-width:900px){.stemkop{grid-template-columns:1.4fr 1fr;align-items:end}}
+.speler{display:flex;align-items:center;gap:clamp(18px,3vw,40px);padding:clamp(20px,3vw,36px);border:1px solid #2a2622;border-radius:10px;background:var(--roet)}
+.grootspeel{flex:none;width:clamp(72px,9vw,112px);aspect-ratio:1;border-radius:50%;border:none;cursor:pointer;background:var(--blauw);color:var(--zwart);display:grid;place-items:center;transition:transform .3s}
+.grootspeel:hover{transform:scale(1.06)}
+.grootspeel svg{width:36%;height:36%}
+.grootspeel .ic-pauze,.speelt .grootspeel .ic-speel{display:none}
+.speelt .grootspeel .ic-pauze{display:block}
+.golfvak{flex:1;min-width:0}
+.nu{display:flex;justify-content:space-between;font-family:"Big Shoulders Display",sans-serif;font-weight:700;letter-spacing:.18em;text-transform:uppercase;font-size:14px;margin-bottom:14px}
+.nu #nuTijd{color:var(--grijs);font-variant-numeric:tabular-nums}
+.golf{display:flex;align-items:center;gap:3px;height:clamp(60px,9vw,110px);cursor:pointer}
+.golf i{flex:1;background:#3a352f;border-radius:2px;min-width:2px;transition:background .2s}
+.golf i.af{background:var(--blauw)}
+.speelt .golf i{animation:puls 1.1s ease-in-out infinite}
+@keyframes puls{50%{transform:scaleY(.7)}}
+.melding{font-size:13px;color:var(--grijs);margin-top:10px;min-height:1.2em}
+.fragmenten{list-style:none;margin-top:12px;counter-reset:f}
+.fragmenten li{display:grid;grid-template-columns:auto 1fr auto;gap:20px;align-items:baseline;padding:20px 8px;border-bottom:1px solid #221f1b;cursor:pointer;transition:padding .3s, background .3s}
+.fragmenten li:hover,.fragmenten li.actief{padding-left:20px;background:linear-gradient(90deg,rgba(108,203,255,.10),transparent 60%)}
+.fragmenten li::before{counter-increment:f;content:counter(f,decimal-leading-zero);font-family:"Big Shoulders Display",sans-serif;color:var(--blauw);font-size:18px}
+.fragmenten h3{font-family:"Instrument Serif",serif;font-weight:400;font-size:clamp(24px,3vw,38px);line-height:1.1}
+.fragmenten li.actief h3{font-style:italic}
+.fragmenten small{color:var(--grijs);font-size:14px;font-variant-numeric:tabular-nums}
+
+/* contact */
+.contact{
+  min-height:90svh;display:flex;flex-direction:column;justify-content:center;
+  max-width:1300px;margin:0 auto;
+}
+.contact h2{
+  font-family:"Instrument Serif",serif;font-weight:400;
+  font-size:clamp(56px,11vw,170px);line-height:.88;letter-spacing:-.04em;
+}
+.contact h2 em{color:var(--blauw)}
+.bureau{
+  margin-top:56px;display:flex;flex-wrap:wrap;gap:24px 56px;align-items:flex-end;
+}
+.bureau p{color:#cfc8bd;max-width:40ch}
+.knop{
+  display:inline-flex;align-items:center;gap:14px;text-decoration:none;
+  font-family:"Big Shoulders Display",sans-serif;font-weight:700;
+  text-transform:uppercase;letter-spacing:.18em;font-size:16px;
+  padding:20px 30px;border:1.5px solid var(--been);border-radius:999px;transition:.3s;
+}
+.knop:hover{background:var(--blauw);border-color:var(--blauw);color:var(--zwart)}
+.knop svg{width:20px;height:20px;transition:transform .3s}
+.knop:hover svg{transform:translateX(5px)}
+
+/* footer */
+.slot{border-top:1px solid #221f1b;padding:36px clamp(20px,4vw,48px) 28px;font-size:14px;color:var(--grijs)}
+.slot-rij,.slot-voet{max-width:1300px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:14px 32px}
+.slot-naam{color:var(--been);font-weight:500}
+.slot-naam span{color:var(--grijs);font-weight:400}
+.slot-links{display:flex;gap:28px;flex-wrap:wrap}
+.slot a{text-decoration:none;color:#cfc8bd;display:inline-flex;align-items:center;gap:8px;transition:color .2s}
+.slot a:hover{color:var(--blauw)}
+.slot svg{width:18px;height:18px}
+.slot-voet{margin-top:22px;padding-top:18px;border-top:1px solid #1a1815;font-size:12px}
+.slot-voet a{color:var(--grijs)}
+
+/* verschijnen */
+.verschijn{opacity:0;transform:translateY(40px);transition:opacity 1s ease, transform 1s cubic-bezier(.2,.7,.2,1)}
+.verschijn.in{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){
+  *{animation:none!important;transition:none!important}
+  .verschijn{opacity:1;transform:none}
+}
+@media(max-width:640px){
+  nav{padding:18px 16px}
+  .monogram{font-size:22px}
+  nav ul{gap:10px}
+  nav a{font-size:11px;letter-spacing:.06em}
+  .speler{flex-direction:column;align-items:stretch}
+  .grootspeel{align-self:flex-start}
+  .opening{align-items:end;padding-bottom:90px}
+  .portret{width:100vw;right:0;top:70px;bottom:auto;opacity:.75}
+  .naam h1 em{padding-left:.3em}
+}
+</style>
+</head>
+<body>
+<div class="korrel" aria-hidden="true"></div>
+
+<nav>
+  <a class="monogram" href="#top">T.G.</a>
+  <ul>
+    <li><a href="#over">Over</a></li>
+    <li><a href="#rollen">Rollen</a></li>
+    <li><a href="#showreel">Showreel</a></li>
+    <li><a href="#stem">Stem</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<header class="opening" id="top">
+  <img class="portret" src="tjebbo.webp" alt="Portret van Tjebbo Gerritsma" width="760" height="1099">
+  <div class="naam">
+    <span class="label">Acteur &amp; stem — film · televisie · theater · voice-over</span>
+    <h1>Tjebbo<em>Gerritsma</em></h1>
+  </div>
+  <div class="scroll">Doek op</div>
+</header>
+
+<div class="lichtkrant" aria-hidden="true">
+  <div id="krant"></div>
+</div>
+
+<section id="over">
+  <div class="akte">I — Over</div>
+  <div class="over">
+    <blockquote class="verschijn">Van het toneel van <em>De Toneelmakerij</em> tot de hoofdrol in <em>Zomer in Frankrijk</em>.</blockquote>
+    <div class="tekst verschijn">
+      <p>Tjebbo Gerritsma (1972) studeerde in 1999 af aan de Toneelschool Amsterdam. Sindsdien speelt hij op het toneel, in films en in televisieseries.</p>
+      <p>Naast het spel is zijn stem een vak apart: hij is veel te horen in voice-overs, commercials en nasynchronisaties.</p>
+      <p>Jarenlang hoorde hij bij de vaste kern van De Toneelmakerij, als speler en als maker. In musicals als Annie en Anatevka liet hij horen dat hij ook kan zingen. Op het scherm was hij te zien in onder meer Zwartboek, Riphagen, Bankier van het Verzet en de series Smeris, Toren C en Judas.</p>
+      <div class="feiten">
+        <div><strong>1999</strong><small>Toneelschool Amsterdam</small></div>
+        <div><strong>90+</strong><small>titels op film en tv</small></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="rollen">
+  <div class="titels">
+    <div class="akte">II — Rollen</div>
+    <div class="tabs" role="group" aria-label="Filter rollen">
+      <button aria-pressed="true" data-filter="alle">Alles</button>
+      <button aria-pressed="false" data-filter="film">Film</button>
+      <button aria-pressed="false" data-filter="tv">Televisie</button>
+      <button aria-pressed="false" data-filter="theater">Theater</button>
+      <button aria-pressed="false" data-filter="stem">Stem</button>
+    </div>
+    <div id="lijst"></div>
+    <p class="voetnoot">Een selectie. Volledige lijst en actuele projecten via het agentschap.</p>
+  </div>
+</section>
+
+<section id="showreel">
+  <div class="reel">
+    <div class="akte">III — Showreel</div>
+    <div class="doek verschijn" role="button" tabindex="0" aria-label="Showreel afspelen (volgt)">
+      <div class="afteller" aria-hidden="true">
+        <svg viewBox="0 0 380 380" fill="none" stroke="#EFE9DF" stroke-width="1.5">
+          <circle cx="190" cy="190" r="170"/><circle cx="190" cy="190" r="140"/>
+          <line x1="190" y1="0" x2="190" y2="380"/><line x1="0" y1="190" x2="380" y2="190"/>
+          <path id="sweep" d="M190 190 L190 20" stroke="#6CCBFF" stroke-width="2"/>
+        </svg>
+      </div>
+      <div class="speel"><svg viewBox="0 0 24 24" fill="#EFE9DF"><path d="M6 4l14 8-14 8z"/></svg></div>
+      <div class="ondertitel" id="ondertitel">Showreel volgt</div>
+    </div>
+  </div>
+</section>
+
+<section id="stem">
+  <div class="stemvak">
+    <div class="akte">IV — Voicereel</div>
+    <div class="stemkop">
+      <h2 class="verschijn">Hoor <em>de stem</em></h2>
+      <p class="verschijn">Commercials, animatie, documentaire en luisterboek. Eén stem, veel registers.</p>
+    </div>
+    <div class="speler verschijn">
+      <button class="grootspeel" id="grootspeel" aria-label="Voicereel afspelen">
+        <svg class="ic-speel" viewBox="0 0 24 24"><path d="M7 4l13 8-13 8z" fill="currentColor"/></svg>
+        <svg class="ic-pauze" viewBox="0 0 24 24"><path d="M7 4h4v16H7zM13 4h4v16h-4z" fill="currentColor"/></svg>
+      </button>
+      <div class="golfvak">
+        <div class="nu"><span id="nuTitel">Voicereel</span><span id="nuTijd">0:00</span></div>
+        <div class="golf" id="golf" aria-hidden="true"></div>
+        <div class="melding" id="melding" role="status"></div>
+      </div>
+    </div>
+    <ol class="fragmenten" id="fragmenten"></ol>
+    <audio id="audio" preload="none"></audio>
+  </div>
+</section>
+
+<section id="contact">
+  <div class="contact">
+    <div class="akte">V — Contact</div>
+    <h2 class="verschijn">Voor de<br><em>volgende</em> rol</h2>
+    <div class="bureau verschijn">
+      <p>Tjebbo wordt vertegenwoordigd door All Stars Agency. Voor boekingen, castings en beschikbaarheid kunt u daar terecht.</p>
+      <a class="knop" href="https://www.allstarsagency.nl/tjebbo-gerritsma">
+        All Stars Agency
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+      </a>
+    </div>
+  </div>
+</section>
+
+<footer class="slot">
+  <div class="slot-rij">
+    <span class="slot-naam">Tjebbo Gerritsma <span>· acteur &amp; stem</span></span>
+    <div class="slot-links">
+      <a href="https://www.instagram.com/tjebbogerritsma/" aria-label="Instagram @tjebbogerritsma">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r=".6" fill="currentColor"/></svg>
+        Instagram
+      </a>
+      <a href="https://www.allstarsagency.nl/tjebbo-gerritsma">All Stars Agency</a>
+    </div>
+  </div>
+  <div class="slot-voet">
+    <span>© <span id="jaar">2026</span> Tjebbo Gerritsma</span>
+    <a href="https://bureaugerritsma.nl">Website: Bureau Gerritsma</a>
+  </div>
+</footer>
+
+<script>
+// rollen — uit openbare bronnen, nog laten controleren
+const rollen = [
+  {t:"Dubbel Zes", j:2025, s:"film"},
+  {t:"Juf Braaksel en de Geniale Ontsnapping", j:2024, s:"film", a:"Hans"},
+  {t:"Zomer in Frankrijk", j:2023, s:"film", a:"Walt", h:true},
+  {t:"Marokkaanse Bruiloft", j:2022, s:"film", a:"Michiel"},
+  {t:"Wat is dan liefde", j:2019, s:"film", a:"Jonas"},
+  {t:"Mijn bijzonder rare week met Tess", j:2019, s:"film", a:"vader van Sam"},
+  {t:"Bankier van het Verzet", j:2018, s:"film", a:"Henri ter Meulen"},
+  {t:"Riphagen", j:2016, s:"film", a:"Joop Out"},
+  {t:"Schone handen", j:2015, s:"film", a:"Frans"},
+  {t:"De Nieuwe Wereld", j:2013, s:"film", a:"Sjors"},
+  {t:"Brammetje Baas", j:2012, s:"film", a:"Jaap Baas"},
+  {t:"Zwartboek", j:2006, s:"film", a:"bewaker met accordeon"},
+  {t:"Gadjé", j:2005, s:"film", a:"Ben"},
+  {t:"Smeris", j:2017, s:"tv", a:"Tjebbo Leeksma"},
+  {t:"Voetbalmaffia", s:"tv"},
+  {t:"Toren C", s:"tv"},
+  {t:"Judas", s:"tv"},
+  {t:"Dertigers", s:"tv"},
+  {t:"Nieuw Zeer", s:"tv"},
+  {t:"De Toneelmakerij", s:"theater", a:"vaste cast en creatief team"},
+  {t:"Anatevka", s:"theater", a:"musical"},
+  {t:"Annie", s:"theater", a:"musical"},
+  {t:"Gelukkig ben ik gelukkig", j:2014, s:"stem", a:"voice-over"},
+];
+const label = {film:"Film", tv:"Televisie", theater:"Theater", stem:"Stem"};
+const lijst = document.getElementById("lijst");
+lijst.innerHTML = rollen.map(r => `
+  <div class="rol" data-soort="${r.s}">
+    <h3>${r.t}</h3>
+    <span class="jaar">${r.j || ""}</span>
+    <span class="als">${label[r.s]}${r.a ? ` — als <b>${r.a}</b>` : ""}${r.h ? " · hoofdrol" : ""}</span>
+  </div>`).join("");
+
+document.querySelectorAll(".tabs button").forEach(b => b.addEventListener("click", () => {
+  document.querySelectorAll(".tabs button").forEach(x => x.setAttribute("aria-pressed", x === b));
+  const f = b.dataset.filter;
+  document.querySelectorAll(".rol").forEach(r =>
+    r.classList.toggle("verborgen", f !== "alle" && r.dataset.soort !== f));
+}));
+
+// lichtkrant
+const titels = ["Zomer in Frankrijk","Zwartboek","Smeris","Riphagen","Bankier van het Verzet","Toren C","Judas","De Toneelmakerij","Wat is dan liefde","Anatevka"];
+const reeks = titels.map(t => `<span>${t}</span><b>●</b>`).join("");
+document.getElementById("krant").innerHTML = reeks + reeks;
+
+// volgspot
+const opening = document.querySelector(".opening");
+let doelX = 50, doelY = 40, x = 50, y = 40, bewogen = false;
+function zet(e){
+  const p = e.touches ? e.touches[0] : e;
+  const r = opening.getBoundingClientRect();
+  doelX = (p.clientX - r.left) / r.width * 100;
+  doelY = (p.clientY - r.top) / r.height * 100;
+  bewogen = true;
+}
+opening.addEventListener("pointermove", zet);
+opening.addEventListener("touchmove", zet, {passive:true});
+let t0 = performance.now();
+(function loop(now){
+  if(!bewogen){ // dwaalt vanzelf rond tot iemand beweegt
+    const s = (now - t0) / 1000;
+    doelX = 50 + Math.sin(s * .5) * 24;
+    doelY = 42 + Math.cos(s * .35) * 14;
+  }
+  x += (doelX - x) * .08; y += (doelY - y) * .08;
+  opening.style.setProperty("--spot-x", x + "%");
+  opening.style.setProperty("--spot-y", y + "%");
+  requestAnimationFrame(loop);
+})(t0);
+
+// showreel placeholder
+const doek = document.querySelector(".doek");
+const ot = document.getElementById("ondertitel");
+const klik = () => { ot.textContent = "De showreel wordt hier binnenkort vertoond."; };
+doek.addEventListener("click", klik);
+doek.addEventListener("keydown", e => { if(e.key === "Enter" || e.key === " ") { e.preventDefault(); klik(); }});
+
+
+// voicereel — zet hier de mp3-bestanden neer zodra Tjebbo ze aanlevert
+const sporen = [
+  {t:"Voicereel", g:"compilatie", src:""},
+  {t:"Commercial", g:"radio en tv", src:""},
+  {t:"Animatie en nasynchronisatie", g:"karakterstemmen", src:""},
+  {t:"Documentaire en voice-over", g:"verteller", src:""},
+  {t:"Luisterboek", g:"voordracht", src:""},
+];
+const audio = document.getElementById("audio"), speler = document.querySelector(".speler");
+const golf = document.getElementById("golf"), melding = document.getElementById("melding");
+const nuTitel = document.getElementById("nuTitel"), nuTijd = document.getElementById("nuTijd");
+const N = 72; let h = 7;
+golf.innerHTML = Array.from({length:N}, (_, i) => {
+  h = (h * 9301 + 49297) % 233280; const r = h / 233280;
+  const vorm = Math.sin(i / N * Math.PI) * .6 + .4;
+  return `<i style="height:${Math.max(8, (r * .7 + .3) * vorm * 100)}%;animation-delay:${(i % 9) * .08}s"></i>`;
+}).join("");
+const balken = golf.querySelectorAll("i");
+const lijstF = document.getElementById("fragmenten");
+lijstF.innerHTML = sporen.map((s, i) => `<li data-i="${i}" class="${i ? "" : "actief"}"><h3>${s.t}</h3><small>${s.g}</small></li>`).join("");
+let huidig = 0;
+const mmss = s => isFinite(s) ? Math.floor(s / 60) + ":" + String(Math.floor(s % 60)).padStart(2, "0") : "0:00";
+function kies(i, spelen){
+  huidig = i; nuTitel.textContent = sporen[i].t;
+  lijstF.querySelectorAll("li").forEach(li => li.classList.toggle("actief", +li.dataset.i === i));
+  balken.forEach(b => b.classList.remove("af")); nuTijd.textContent = "0:00";
+  if (sporen[i].src) { audio.src = sporen[i].src; melding.textContent = ""; if (spelen) audio.play().catch(()=>{}); }
+  else { audio.removeAttribute("src"); speler.classList.remove("speelt"); melding.textContent = "Dit fragment wordt binnenkort toegevoegd."; }
+}
+lijstF.addEventListener("click", e => { const li = e.target.closest("li"); if (li) kies(+li.dataset.i, true); });
+document.getElementById("grootspeel").addEventListener("click", () => {
+  if (!sporen[huidig].src) { melding.textContent = "De voicereel wordt binnenkort toegevoegd."; return; }
+  if (!audio.getAttribute("src")) audio.src = sporen[huidig].src;
+  audio.paused ? audio.play().catch(()=>{}) : audio.pause();
+});
+golf.addEventListener("click", e => {
+  if (!audio.duration) return;
+  const r = golf.getBoundingClientRect(); audio.currentTime = (e.clientX - r.left) / r.width * audio.duration;
+});
+audio.addEventListener("play", () => speler.classList.add("speelt"));
+audio.addEventListener("pause", () => speler.classList.remove("speelt"));
+audio.addEventListener("ended", () => { speler.classList.remove("speelt"); if (huidig < sporen.length - 1) kies(huidig + 1, true); });
+audio.addEventListener("timeupdate", () => {
+  const f = audio.currentTime / (audio.duration || 1), k = Math.floor(f * N);
+  balken.forEach((b, i) => b.classList.toggle("af", i < k)); nuTijd.textContent = mmss(audio.currentTime);
+});
+
+document.getElementById("jaar").textContent = new Date().getFullYear();
+
+// verschijnen bij scrollen
+const io = new IntersectionObserver(es => es.forEach(e => {
+  if(e.isIntersecting){ e.target.classList.add("in"); io.unobserve(e.target); }
+}), {threshold:.15});
+document.querySelectorAll(".verschijn, .rol").forEach(el => {
+  if(el.classList.contains("rol")) el.classList.add("verschijn");
+  io.observe(el);
+});
+</script>
+</body>
+</html>
