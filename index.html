@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Tjebbo Gerritsma — acteur en stem</title>
+<title>Tjebbo Gerritsma — acteur, toneel, musical, film &amp; tv, stem</title>
 <meta name="description" content="Tjebbo Gerritsma, acteur en stemacteur. Showreel, voicereel en cv.">
 <link rel="icon" href="tg.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -48,7 +48,7 @@ header{
 /* openingsblok: naam + showreel */
 .opening{padding-top:clamp(32px,6vh,72px);padding-bottom:clamp(56px,9vh,96px)}
 .naam{display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:8px 24px;margin-bottom:28px}
-h1{font-weight:600;font-size:clamp(34px,5.4vw,64px);line-height:1.05;letter-spacing:-.02em}
+h1{color:var(--blauw);font-weight:600;font-size:clamp(34px,5.4vw,64px);line-height:1.05;letter-spacing:-.02em}
 .vak{color:var(--grijs);font-size:15px}
 .doek{
   position:relative;aspect-ratio:16/9;background:var(--vlak);overflow:hidden;
@@ -58,24 +58,25 @@ h1{font-weight:600;font-size:clamp(34px,5.4vw,64px);line-height:1.05;letter-spac
 .doek::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(255,255,255,0) 55%,rgba(0,0,0,.28))}
 .speel{
   position:relative;z-index:2;width:88px;height:88px;border-radius:50%;
-  background:var(--wit);display:grid;place-items:center;
-  box-shadow:0 6px 30px rgba(0,0,0,.12);transition:transform .3s, background .3s;
+  background:var(--blauw);display:grid;place-items:center;
+  box-shadow:0 6px 30px rgba(0,0,0,.15);transition:transform .3s, background .3s;
 }
 .speel svg{width:26px;height:26px;margin-left:4px}
-.doek:hover .speel{transform:scale(1.07);background:var(--blauw)}
+.doek:hover .speel{transform:scale(1.07);background:var(--wit)}
 .doek .bijschrift{
   position:absolute;left:20px;bottom:16px;z-index:2;color:#fff;font-size:14px;font-weight:500;letter-spacing:.02em
 }
 
 /* secties */
 section{padding:clamp(56px,10vh,110px) 0;border-top:1px solid var(--lijn)}
-.label{display:block;font-size:13px;font-weight:500;color:var(--grijs);letter-spacing:.06em;text-transform:uppercase;margin-bottom:28px}
+.label{display:flex;align-items:center;gap:12px;font-size:13px;font-weight:500;color:var(--grijs);letter-spacing:.06em;text-transform:uppercase;margin-bottom:28px}
+.label::before{content:"";width:28px;height:3px;background:var(--blauw)}
 h2{font-weight:600;font-size:clamp(26px,3.2vw,38px);line-height:1.15;letter-spacing:-.015em;margin-bottom:20px}
 
 /* voicereel */
 .speler{display:flex;align-items:center;gap:clamp(16px,3vw,32px);padding:clamp(18px,3vw,28px);background:var(--vlak)}
-.grootspeel{flex:none;width:64px;height:64px;border-radius:50%;border:none;cursor:pointer;background:var(--inkt);color:#fff;display:grid;place-items:center;transition:background .25s, color .25s}
-.grootspeel:hover{background:var(--blauw);color:var(--inkt)}
+.grootspeel{flex:none;width:64px;height:64px;border-radius:50%;border:none;cursor:pointer;background:var(--blauw);color:var(--inkt);display:grid;place-items:center;transition:background .25s, color .25s}
+.grootspeel:hover{background:var(--inkt);color:#fff}
 .grootspeel svg{width:22px;height:22px}
 .grootspeel .ic-pauze,.speelt .grootspeel .ic-speel{display:none}
 .speelt .grootspeel .ic-pauze{display:block}
@@ -84,7 +85,7 @@ h2{font-weight:600;font-size:clamp(26px,3.2vw,38px);line-height:1.15;letter-spac
 .nu #nuTijd{color:var(--grijs);font-variant-numeric:tabular-nums;font-weight:400}
 .golf{display:flex;align-items:center;gap:3px;height:56px;cursor:pointer}
 .golf i{flex:1;background:var(--licht);border-radius:2px;min-width:0}
-.golf i.af{background:var(--inkt)}
+.golf i.af{background:var(--blauw)}
 .speelt .golf i{animation:puls 1.1s ease-in-out infinite}
 @keyframes puls{50%{transform:scaleY(.7)}}
 .melding{font-size:13px;color:var(--grijs);margin-top:8px;min-height:1.2em}
@@ -92,6 +93,7 @@ h2{font-weight:600;font-size:clamp(26px,3.2vw,38px);line-height:1.15;letter-spac
 .fragmenten li{display:flex;justify-content:space-between;gap:16px;padding:16px 4px;border-bottom:1px solid var(--lijn);cursor:pointer;transition:padding .25s}
 .fragmenten li:hover{padding-left:12px}
 .fragmenten li.actief span:first-child{font-weight:600}
+.fragmenten li.actief{box-shadow:inset 3px 0 0 var(--blauw);padding-left:14px}
 .fragmenten small{color:var(--grijs);font-size:14px}
 
 /* over */
@@ -108,8 +110,10 @@ h2{font-weight:600;font-size:clamp(26px,3.2vw,38px);line-height:1.15;letter-spac
   border:1px solid var(--lijn);padding:7px 16px;border-radius:999px;transition:.2s;
 }
 .tabs button:hover{color:var(--inkt);border-color:var(--inkt)}
-.tabs button[aria-pressed="true"]{background:var(--inkt);border-color:var(--inkt);color:#fff}
+.tabs button[aria-pressed="true"]{background:var(--blauw);border-color:var(--blauw);color:var(--inkt);font-weight:500}
 .cv{width:100%;border-collapse:collapse}
+.cv tr{transition:background .2s}
+.cv tr:hover{background:rgba(108,203,255,.12)}
 .cv td{padding:14px 12px 14px 0;border-bottom:1px solid var(--lijn);vertical-align:baseline}
 .cv td:first-child{font-weight:500}
 .cv td.rol{color:var(--grijs)}
@@ -125,13 +129,13 @@ h2{font-weight:600;font-size:clamp(26px,3.2vw,38px);line-height:1.15;letter-spac
 .knop{
   display:inline-flex;align-items:center;gap:12px;margin-top:24px;
   text-decoration:none;font-weight:500;font-size:15px;
-  padding:14px 24px;background:var(--inkt);color:#fff;transition:background .25s,color .25s;
+  padding:14px 24px;background:var(--blauw);color:var(--inkt);transition:background .25s,color .25s;
 }
-.knop:hover{background:var(--blauw);color:var(--inkt)}
+.knop:hover{background:var(--inkt);color:#fff}
 .knop svg{width:18px;height:18px}
 
 /* voet */
-footer{border-top:1px solid var(--lijn);padding:28px 0 36px;font-size:14px;color:var(--grijs)}
+footer{border-top:3px solid var(--blauw);padding:28px 0 36px;font-size:14px;color:var(--grijs)}
 .voet{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px 32px}
 .voet-links{display:flex;gap:24px;flex-wrap:wrap;align-items:center}
 .voet a{text-decoration:none;display:inline-flex;align-items:center;gap:8px;transition:color .2s}
@@ -176,7 +180,7 @@ footer{border-top:1px solid var(--lijn);padding:28px 0 36px;font-size:14px;color
 <div class="wrap opening" id="showreel">
   <div class="naam">
     <h1>Tjebbo Gerritsma</h1>
-    <span class="vak">Acteur &amp; stem</span>
+    <span class="vak">Acteur / toneel / musical / film &amp; tv / stem</span>
   </div>
   <div class="doek" role="button" tabindex="0" aria-label="Showreel afspelen (volgt)">
     <img src="tjebbo.webp" alt="">
@@ -210,7 +214,7 @@ footer{border-top:1px solid var(--lijn);padding:28px 0 36px;font-size:14px;color
     <img class="verschijn" src="tjebbo.webp" alt="Portret van Tjebbo Gerritsma" width="900" height="1300" loading="lazy">
     <div class="verschijn">
       <span class="label">Over</span>
-      <h2>Acteur op toneel, film en televisie. En een stem die je vaak hoort.</h2>
+      <h2>Acteur op toneel, in musicals, film en tv. En een stem die je vaak hoort.</h2>
       <p>Tjebbo Gerritsma (1972) studeerde in 1999 af aan de Toneelschool Amsterdam. Jarenlang hoorde hij bij de vaste kern van De Toneelmakerij, als speler en als maker. Hij speelde in musicals als Annie en Anatevka.</p>
       <p>Op het scherm was hij te zien in onder meer Zwartboek, Riphagen, Bankier van het Verzet en Zomer in Frankrijk, en in series als Smeris, Toren C en Judas. Daarnaast doet hij veel stemwerk: voice-overs, commercials en nasynchronisaties.</p>
     </div>
@@ -222,9 +226,10 @@ footer{border-top:1px solid var(--lijn);padding:28px 0 36px;font-size:14px;color
     <span class="label">Cv</span>
     <div class="tabs" role="group" aria-label="Filter cv">
       <button aria-pressed="true" data-filter="alle">Alles</button>
+      <button aria-pressed="false" data-filter="toneel">Toneel</button>
+      <button aria-pressed="false" data-filter="musical">Musical</button>
       <button aria-pressed="false" data-filter="film">Film</button>
-      <button aria-pressed="false" data-filter="tv">Televisie</button>
-      <button aria-pressed="false" data-filter="theater">Theater</button>
+      <button aria-pressed="false" data-filter="tv">Tv</button>
       <button aria-pressed="false" data-filter="stem">Stem</button>
     </div>
     <table class="cv"><tbody id="lijst"></tbody></table>
@@ -289,9 +294,9 @@ const rollen = [
   {t:"Judas", s:"tv"},
   {t:"Dertigers", s:"tv"},
   {t:"Nieuw Zeer", s:"tv"},
-  {t:"De Toneelmakerij", s:"theater", a:"vaste cast en creatief team"},
-  {t:"Anatevka", s:"theater", a:"musical"},
-  {t:"Annie", s:"theater", a:"musical"},
+  {t:"De Toneelmakerij", s:"toneel", a:"vaste cast en creatief team"},
+  {t:"Anatevka", s:"musical"},
+  {t:"Annie", s:"musical"},
   {t:"Gelukkig ben ik gelukkig", j:2014, s:"stem", a:"voice-over"},
 ];
 document.getElementById("lijst").innerHTML = rollen.map(r =>
