@@ -278,6 +278,9 @@ section{padding:clamp(80px,14vh,160px) clamp(20px,4vw,48px)}
 .slot svg{width:18px;height:18px}
 .slot-voet{margin-top:22px;padding-top:18px;border-top:1px solid #1a1815;font-size:12px}
 .slot-voet a{color:var(--grijs)}
+.maker{gap:10px}
+.maker img{height:24px;width:auto;opacity:.75;transition:opacity .2s}
+.maker:hover img{opacity:1}
 
 /* verschijnen */
 .verschijn{opacity:0;transform:translateY(40px);transition:opacity 1s ease, transform 1s cubic-bezier(.2,.7,.2,1)}
@@ -424,7 +427,7 @@ section{padding:clamp(80px,14vh,160px) clamp(20px,4vw,48px)}
   </div>
   <div class="slot-voet">
     <span>© <span id="jaar">2026</span> Tjebbo Gerritsma</span>
-    <a href="https://bureaugerritsma.nl">Website: Bureau Gerritsma</a>
+    <a href="https://bureaugerritsma.nl" class="maker" aria-label="Website: Bureau Gerritsma"><img src="bureau-gerritsma-wit.svg" alt="Bureau Gerritsma" width="115" height="24"></a>
   </div>
 </footer>
 
