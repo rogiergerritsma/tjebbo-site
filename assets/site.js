@@ -1,55 +1,25 @@
-// cv — selectie uit openbare bronnen; wordt vervangen door het volledige cv van All Stars
-const rollen = [
-  {t:"Dubbel Zes", j:2025, s:"film"},
-  {t:"Juf Braaksel en de Geniale Ontsnapping", j:2024, s:"film", a:"Hans"},
-  {t:"Zomer in Frankrijk", j:2023, s:"film", a:"Walt (hoofdrol)"},
-  {t:"Marokkaanse Bruiloft", j:2022, s:"film", a:"Michiel"},
-  {t:"Wat is dan liefde", j:2019, s:"film", a:"Jonas"},
-  {t:"Mijn bijzonder rare week met Tess", j:2019, s:"film", a:"vader van Sam"},
-  {t:"Bankier van het Verzet", j:2018, s:"film", a:"Henri ter Meulen"},
-  {t:"Riphagen", j:2016, s:"film", a:"Joop Out"},
-  {t:"Schone handen", j:2015, s:"film", a:"Frans"},
-  {t:"De Nieuwe Wereld", j:2013, s:"film", a:"Sjors"},
-  {t:"Brammetje Baas", j:2012, s:"film", a:"Jaap Baas"},
-  {t:"Zwartboek", j:2006, s:"film", a:"bewaker met accordeon"},
-  {t:"Gadjé", j:2005, s:"film", a:"Ben"},
-  {t:"Smeris", j:2017, s:"tv", a:"Tjebbo Leeksma"},
-  {t:"Voetbalmaffia", s:"tv"},
-  {t:"Toren C", s:"tv"},
-  {t:"Judas", s:"tv"},
-  {t:"Dertigers", s:"tv"},
-  {t:"Nieuw Zeer", s:"tv"},
-  {t:"De Toneelmakerij", s:"toneel", a:"vaste cast en creatief team"},
-  {t:"Anatevka", s:"musical"},
-  {t:"Annie", s:"musical"},
-  {t:"Gelukkig ben ik gelukkig", j:2014, s:"stem", a:"voice-over"},
-];
-document.getElementById("lijst").innerHTML = rollen.map(r =>
-  `<tr data-soort="${r.s}"><td>${r.t}</td><td class="rol">${r.a || ""}</td><td class="jaar">${r.j || ""}</td></tr>`).join("");
-document.querySelectorAll(".tabs button").forEach(b => b.addEventListener("click", () => {
-  document.querySelectorAll(".tabs button").forEach(x => x.setAttribute("aria-pressed", x === b));
-  const f = b.dataset.filter;
-  document.querySelectorAll("#lijst tr").forEach(r => r.classList.toggle("verborgen", f !== "alle" && r.dataset.soort !== f));
-}));
+// showreel: Vimeo pas laden na klik
+const doek = document.getElementById("doek");
+function speelShowreel(){
+  if (doek.querySelector("iframe")) return;
+  const f = document.createElement("iframe");
+  f.src = "https://player.vimeo.com/video/849468676?autoplay=1&dnt=1&title=0&byline=0&portrait=0";
+  f.allow = "autoplay; fullscreen; picture-in-picture"; f.title = "Showreel Tjebbo Gerritsma";
+  doek.appendChild(f); doek.style.cursor = "default";
+}
+doek.addEventListener("click", speelShowreel);
+doek.addEventListener("keydown", e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); speelShowreel(); } });
 
-// showreel — video volgt via All Stars
-const doek = document.querySelector(".doek"), bijschrift = document.getElementById("bijschrift");
-const showreel = () => { bijschrift.textContent = "De showreel wordt hier binnenkort vertoond."; };
-doek.addEventListener("click", showreel);
-doek.addEventListener("keydown", e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); showreel(); } });
-
-// voicereel — mp3's volgen via All Stars
+// voicereel
 const sporen = [
-  {t:"Voicereel", g:"compilatie", src:""},
-  {t:"Commercial", g:"radio en tv", src:""},
-  {t:"Animatie en nasynchronisatie", g:"karakterstemmen", src:""},
-  {t:"Documentaire en voice-over", g:"verteller", src:""},
+  {t:"CZ", g:"commercial", src:"audio/cz.mp3"},
+  {t:"Heineken", g:"commercial", src:"audio/heineken.mp3"},
+  {t:"Disney", g:"commercial", src:"audio/disney.mp3"},
+  {t:"McDonald's", g:"commercial", src:"audio/mcdonalds.mp3"},
 ];
 const audio = document.getElementById("audio"), speler = document.querySelector(".speler");
-const golf = document.getElementById("golf"), melding = document.getElementById("melding");
-const nuTitel = document.getElementById("nuTitel"), nuTijd = document.getElementById("nuTijd");
+const golf = document.getElementById("golf"), nuTitel = document.getElementById("nuTitel"), nuTijd = document.getElementById("nuTijd");
 const N = 72; let h = 7;
-// bars are built via the DOM (not innerHTML with style attributes) so a strict CSP allows them
 for (let i = 0; i < N; i++) {
   h = (h * 9301 + 49297) % 233280; const r = h / 233280;
   const vorm = Math.sin(i / N * Math.PI) * .6 + .4;
@@ -60,26 +30,20 @@ for (let i = 0; i < N; i++) {
 }
 const balken = golf.querySelectorAll("i");
 const lijstF = document.getElementById("fragmenten");
-lijstF.innerHTML = sporen.map((s, i) => `<li data-i="${i}" class="${i ? "" : "actief"}"><span>${s.t}</span><small>${s.g}</small></li>`).join("");
-let huidig = 0;
+lijstF.innerHTML = sporen.map((s, i) => `<li data-i="${i}" class="${i ? "" : "actief"}"><span>${s.t}</span><small id="duur${i}">${s.g}</small></li>`).join("");
 const mmss = s => isFinite(s) ? Math.floor(s / 60) + ":" + String(Math.floor(s % 60)).padStart(2, "0") : "0:00";
+sporen.forEach((s, i) => { const a = new Audio(); a.preload = "metadata"; a.src = s.src;
+  a.addEventListener("loadedmetadata", () => { document.getElementById("duur" + i).textContent = s.g + " · " + mmss(a.duration); }); });
+let huidig = 0; audio.src = sporen[0].src;
 function kies(i, spelen){
-  huidig = i; nuTitel.textContent = sporen[i].t;
+  huidig = i; nuTitel.textContent = sporen[i].t; audio.src = sporen[i].src;
   lijstF.querySelectorAll("li").forEach(li => li.classList.toggle("actief", +li.dataset.i === i));
   balken.forEach(b => b.classList.remove("af")); nuTijd.textContent = "0:00";
-  if (sporen[i].src) { audio.src = sporen[i].src; melding.textContent = ""; if (spelen) audio.play().catch(()=>{}); }
-  else { audio.removeAttribute("src"); speler.classList.remove("speelt"); melding.textContent = "Dit fragment wordt binnenkort toegevoegd."; }
+  if (spelen) audio.play().catch(()=>{});
 }
 lijstF.addEventListener("click", e => { const li = e.target.closest("li"); if (li) kies(+li.dataset.i, true); });
-document.getElementById("grootspeel").addEventListener("click", () => {
-  if (!sporen[huidig].src) { melding.textContent = "De voicereel wordt binnenkort toegevoegd."; return; }
-  if (!audio.getAttribute("src")) audio.src = sporen[huidig].src;
-  audio.paused ? audio.play().catch(()=>{}) : audio.pause();
-});
-golf.addEventListener("click", e => {
-  if (!audio.duration) return;
-  const r = golf.getBoundingClientRect(); audio.currentTime = (e.clientX - r.left) / r.width * audio.duration;
-});
+document.getElementById("grootspeel").addEventListener("click", () => { audio.paused ? audio.play().catch(()=>{}) : audio.pause(); });
+golf.addEventListener("click", e => { if (!audio.duration) return; const r = golf.getBoundingClientRect(); audio.currentTime = (e.clientX - r.left) / r.width * audio.duration; });
 audio.addEventListener("play", () => speler.classList.add("speelt"));
 audio.addEventListener("pause", () => speler.classList.remove("speelt"));
 audio.addEventListener("ended", () => { speler.classList.remove("speelt"); if (huidig < sporen.length - 1) kies(huidig + 1, true); });
@@ -88,9 +52,50 @@ audio.addEventListener("timeupdate", () => {
   balken.forEach((b, i) => b.classList.toggle("af", i < k)); nuTijd.textContent = mmss(audio.currentTime);
 });
 
-document.getElementById("jaar").textContent = new Date().getFullYear();
+// foto's
+const fotos = [
+  {f:"portret-1", t:"Portret — Roger Neve"}, {f:"still-hanna-van-hendrik", t:"Hanna van Hendrik"},
+  {f:"portret-2", t:"Portret — Roger Neve"}, {f:"portret-3", t:"Portret — Roger Neve"},
+  {f:"productie-1", t:""}, {f:"portret-5", t:"Portret — Roger Neve"},
+  {f:"still-klokhuis", t:"Het Klokhuis"}, {f:"portret-4", t:"Portret — Roger Neve"},
+  {f:"productie-2", t:""}, {f:"portret-6", t:"Portret — Roger Neve"},
+  {f:"still-riphagen", t:"Riphagen"}, {f:"portret-7", t:"Portret — Roger Neve"}, {f:"portret-8", t:"Portret — Roger Neve"},
+];
+document.getElementById("raster").innerHTML = fotos.map((p, i) =>
+  `<figure data-i="${i}"><img src="foto/${p.f}-klein.webp" alt="${p.t || "Tjebbo Gerritsma"}" loading="lazy">${p.t ? `<figcaption>${p.t}</figcaption>` : ""}</figure>`).join("");
+const lb = document.getElementById("lichtbak"), lbBeeld = document.getElementById("lbBeeld"), lbTekst = document.getElementById("lbTekst");
+let lbI = 0;
+function toon(i){ lbI = (i + fotos.length) % fotos.length; lbBeeld.src = "foto/" + fotos[lbI].f + ".webp"; lbBeeld.alt = fotos[lbI].t || "Tjebbo Gerritsma"; lbTekst.textContent = fotos[lbI].t; }
+document.getElementById("raster").addEventListener("click", e => { const f = e.target.closest("figure"); if (!f) return; toon(+f.dataset.i); lb.classList.add("open"); document.body.style.overflow = "hidden"; });
+function sluit(){ lb.classList.remove("open"); document.body.style.overflow = ""; }
+document.getElementById("lbDicht").onclick = sluit;
+document.getElementById("lbVorige").onclick = () => toon(lbI - 1);
+document.getElementById("lbVolgende").onclick = () => toon(lbI + 1);
+lb.addEventListener("click", e => { if (e.target === lb) sluit(); });
+document.addEventListener("keydown", e => { if (!lb.classList.contains("open")) return;
+  if (e.key === "Escape") sluit(); if (e.key === "ArrowLeft") toon(lbI - 1); if (e.key === "ArrowRight") toon(lbI + 1); });
 
-const io = new IntersectionObserver(es => es.forEach(e => {
-  if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); }
-}), {threshold:.12});
+// cv — overgenomen uit het cv van All Stars Agency (3 november 2026)
+const cv = [{"c": "film", "j": "2026", "t": "Champagne", "m": "Tim Kamps, Aattache Films, Brabant Films"}, {"c": "film", "j": "2025", "t": "Dubbel Zes", "m": "Jonathan Elbers, TDMP"}, {"c": "film", "j": "2024", "t": "Juf Braaksel en de Geniale Ontsnapping", "m": "Aram van de Rest, AM Pictures"}, {"c": "film", "j": "2023", "t": "De Bellinga's: Vakantie op stelten", "m": "Armando de Boer, Jabadoo Pictures"}, {"c": "film", "j": "2022", "t": "Zomer in Frankrijk", "m": "Mark de Cloe, 2CFILM"}, {"c": "film", "j": "2022", "t": "Marokkaanse Bruiloft", "m": "Johan Nijenhuis, Ingmar Menning"}, {"c": "film", "j": "2021", "t": "De Vloek van Lughus", "m": "Sjoerd de Bont"}, {"c": "film", "j": "2019", "t": "April, May, June", "m": "Will Koopman, John de Mol"}, {"c": "film", "j": "2019", "t": "Verliefd op Cuba", "m": "Johan Nijenhuis, Ingmar Menning"}, {"c": "film", "j": "2019", "t": "Mijn bijzonder rare week met Tess", "m": "Steven Wouterlood, Ingmar Menning, Piet-Harm Sterk"}, {"c": "film", "j": "2018", "t": "Bankier van het Verzet", "m": "Joram Lürsen, Alain de Levita e.a."}, {"c": "film", "j": "2016", "t": "Trollie: Home Sweet Home", "m": "Gert Embrechts, Johan Nijenhuis &amp; Co"}, {"c": "film", "j": "2016", "t": "Trollie: The Great Rescue", "m": "Gert Embrechts, Johan Nijenhuis &amp; Co"}, {"c": "film", "j": "2016", "t": "Soof 2", "m": "Esme Lammers, Hanneke Niens e.a."}, {"c": "film", "j": "2015", "t": "Schone Handen", "m": "Tjebbo Penning, Maaike Benschop e.a."}, {"c": "film", "j": "2014", "t": "Gelukkig ben ik gelukkig", "m": "Victoria Warmerdam"}, {"c": "film", "j": "2014", "t": "Kris Kras", "m": "David Grifhorst, Remco Kobus"}, {"c": "film", "j": "2013", "t": "Patronen", "m": "Colin Huijser"}, {"c": "film", "j": "2013", "t": "Clafoutis", "m": "Jonathan Elbers, InFocus Producties &amp; Shining Armour Films"}, {"c": "film", "j": "2013", "t": "De Nieuwe Wereld", "m": "Jaap van Heusden, IJswater Films"}, {"c": "film", "j": "2013", "t": "De Zure Inval", "m": "Jonathan J. Smit"}, {"c": "film", "j": "2012", "t": "De Groeten van Mike!", "m": "Maria Peters, Shooting Star Filmcompany"}, {"c": "film", "j": "2012", "t": "Amstel!", "m": "Jaap van Eyck, NTR / Volt Films"}, {"c": "film", "j": "2012", "t": "Brammetje Baas", "m": "Anna van der Heide, Burny Bos, Ruud van der Heyde"}, {"c": "film", "j": "2010", "t": "Kom niet aan mijn kinderen", "m": "Ron Termaat, Paul Ruven"}, {"c": "film", "j": "2009", "t": "Lover of Loser", "m": "Dave Schram, Shooting Star Filmcompany"}, {"c": "film", "j": "2006", "t": "Afblijven", "m": "Maria Peters, Shooting Star Filmcompany"}, {"c": "film", "j": "2006", "t": "Zwartboek", "m": "Paul Verhoeven, San Fu Maltha"}, {"c": "film", "j": "2006", "t": "Ik omhels je met 1000 armen", "m": "Willem van de Sande Bakhuyzen, Hanneke Niens e.a."}, {"c": "film", "j": "2005", "t": "Gadjé", "m": "Thomas Korthals Altes, Jacqueline de Goeij"}, {"c": "film", "j": "2004", "t": "Ellis in Glamourland", "m": "Pieter Kramer, Alain De Levita en Johan Nijenhuis"}, {"c": "film", "j": "2002", "t": "Polonaise", "m": "Nicole van Kilsdonk, René Scholten en Digna Sinke"}, {"c": "film", "j": "1999", "t": "Leven en dood van Quidam Quidam", "m": "Maria Uitdehaag, Robert Wiering, VPRO TV"}, {"c": "film", "j": "1998", "t": "fl 19,99", "m": "Mart Dominicus, Frans van Gestel e.a."}, {"c": "film", "j": "1990", "t": "Spelen of Sterven", "m": "Frank Krom, Hans Pos"}, {"c": "tv", "j": "2026", "t": "Welkom Thuis", "m": "BNNVARA"}, {"c": "tv", "j": "2026", "t": "Hein S2", "m": "Margien Rogaar, Pupkin Film"}, {"c": "tv", "j": "2026", "t": "De Eetclub", "m": "Dana Nechustan, Fiction Valley"}, {"c": "tv", "j": "2025", "t": "Het Gouden Uur II", "m": "Bobby Boermans en Lourens Blok, NL Film"}, {"c": "tv", "j": "2025", "t": "Welkom in Amsterdam", "m": "Niek Barendsen, NTR"}, {"c": "tv", "j": "2025", "t": "Slapeloze Nachten", "m": "Niels Bourgonje, Every Media"}, {"c": "tv", "j": "2024", "t": "Ten Minste Houdbaar Tot", "m": "Jan Albert de Weert, Bing Film"}, {"c": "tv", "j": "2024", "t": "Het Klokhuis", "m": "NTR"}, {"c": "tv", "j": "2024", "t": "Tropenjaren", "m": "Elzelien Peters, Witte Geit"}, {"c": "tv", "j": "2024", "t": "Flikken Maastricht", "m": "Annemarie van de Mond, Hollands Licht"}, {"c": "tv", "j": "2024", "t": "Welkom in de Jaren 70/80", "m": "Niek Barendsen, NTR"}, {"c": "tv", "j": "2024", "t": "Ramadan Bites", "m": "Media Brothers"}, {"c": "tv", "j": "2024", "t": "Sfeermakertjes", "m": "Prappers"}, {"c": "tv", "j": "2023", "t": "Maud &amp; Babs II", "m": "Norbert ter Hall, MediaLane"}, {"c": "tv", "j": "2021-2023", "t": "Dertigers", "m": "Elzelien Peters, BlazHoffski"}, {"c": "tv", "j": "2022", "t": "Judas", "m": "Joram Lürsen, RTL Nederland/ Videoland"}, {"c": "tv", "j": "2021", "t": "De Slet van 6VWO", "m": "David Cocheret, AVROTROS"}, {"c": "tv", "j": "2021", "t": "De K van Karlijn", "m": "Will Koopman, Albert Jan van Rees, ITV Studios"}, {"c": "tv", "j": "2021", "t": "De Strijd om het Binnenhof", "m": "Niek Barendsen, NTR"}, {"c": "tv", "j": "2020-2025", "t": "Nieuw Zeer", "m": "Niek Barendsen, NTR"}, {"c": "tv", "j": "2012-2020", "t": "Toren C", "m": "Albert Jan van Rees, e.a., BlazHoffsk"}, {"c": "tv", "j": "2019", "t": "Familie Kruys", "m": "Aniëlle Webster, Talpa Fictie"}, {"c": "tv", "j": "2019", "t": "Centraal", "m": "initiatief van NTR, BNNVARA, VPRO, NPO-fonds, Nederlands Filmfonds en CoBO"}, {"c": "tv", "j": "2017-2018", "t": "Wakker Worden!", "m": "Will Koopman, Vincent Schuurman, e.a., Talpa"}, {"c": "tv", "j": "2018", "t": "Soof: een nieuw begin", "m": "de Clercq, e.a., RTL Nederland/ Videoland"}, {"c": "tv", "j": "2017", "t": "Voetbalmaffia", "m": "Mark de Cloe, Iván López Núñez, KRO-NCRV"}, {"c": "tv", "j": "2017", "t": "Smeris", "m": "o.a. Willem Gerritsen, Pupkin"}, {"c": "tv", "j": "2017", "t": "Riphagen", "m": "de serie, Pieter Kuipers, Pupkin Film"}, {"c": "tv", "j": "2016", "t": "Jeuk", "m": "Elzelien Peters, Kemna"}, {"c": "tv", "j": "2015", "t": "Trollie", "m": "de serie, Gert Embrechts, Johan Nijenhuis &amp; Co"}, {"c": "tv", "j": "2015", "t": "Noord Zuid", "m": "Paula van der Oest, Reinier Smit, e.a., Four One Media"}, {"c": "tv", "j": "2014", "t": "Welkom bij de Romeinen", "m": "Niek Barendsen, Jacqueline Brinkman"}, {"c": "tv", "j": "2014", "t": "Rechercheur Ria", "m": "Ruud Schuurman, e.a. Johan Nijenhuis &amp; Co"}, {"c": "tv", "j": "2014", "t": "Moordvrouw", "m": "Ben Sombogaart, Endemol"}, {"c": "tv", "j": "2013", "t": "Feuten", "m": "Lourens Blok, e.a., Pupkin Film"}, {"c": "tv", "j": "2011-2012", "t": "Iedereen is gek op Jack I &amp; II", "m": "o.a. Will Koopman, Talpa Fictie"}, {"c": "tv", "j": "2011-2012", "t": "Hoe Overleef Ik?", "m": "Remy van Heugten, AVRO &amp; Lemming Film"}, {"c": "tv", "j": "2011", "t": "Flikken Maastricht", "m": "Martin Schwab, Warner Bros"}, {"c": "tv", "j": "2010", "t": "Bellicher", "m": "Peter de Baan, David Lammers, Pupkin Film"}, {"c": "tv", "j": "2010", "t": "Verborgen Gebreken", "m": "Thomas Korthals Altes, NL Film"}, {"c": "tv", "j": "2005", "t": "Grijpstra &amp; de Gier", "m": "Wim Verstappen, Erik van ’t Wout"}, {"c": "tv", "j": "2005", "t": "Enneagram", "m": "Menno Westendorp, Jacqueline de Goeij"}, {"c": "tv", "j": "2001", "t": "All Stars", "m": "de serie, Joram Lürsen, VARA TV"}, {"c": "tv", "j": "1998", "t": "Wij Alexander", "m": "Imko Haanstra, KRO/ Corona pictures"}, {"c": "tv", "j": "1998", "t": "Baantjer", "m": "Will Koopman, Millstreet Films"}, {"c": "tv", "j": "1997", "t": "Fort Alpha", "m": "Wik Bekker, TROS"}, {"c": "tv", "j": "1995", "t": "12 steden, 13 ongelukken", "m": "Pieter Kuijpers, Stips en Han Peekel"}, {"c": "tv", "j": "1995", "t": "Goede tijden, slechte tijden", "m": "Endemol"}, {"c": "tv", "j": "1994", "t": "De Sylvia Millecam Show", "m": "Egbert van Hees, Endemol"}, {"c": "toneel", "j": "2024-2025", "t": "De Klokkenluider van de Grote Kerk", "m": "Leopold Witte, MuziekBrigade"}, {"c": "toneel", "j": "2024", "t": "De Grote Vloed", "m": "Liesbeth Coltof, Zummerbuhne"}, {"c": "musical", "j": "2022", "t": "Annie de Musical", "m": "Mark Vijn en Theater Alliantie"}, {"c": "toneel", "j": "2019", "t": "Casablanca", "m": "Madeleine Matzer, MATZER Theaterproducties"}, {"c": "toneel", "j": "2018", "t": "Kras", "m": "Paul Knieriem, Stichting Toneelschuur Producties"}, {"c": "toneel", "j": "2017", "t": "Lear", "m": "Liesbeth Coltof, De Toneelmakerij"}, {"c": "musical", "j": "2017", "t": "Fiddler on the Roof", "m": "Ruut Weissman, Stage Entertainment"}, {"c": "toneel", "j": "2016", "t": "Enkeltje Amsterdam", "m": "Liesbeth Colthof, De Toneelmakerij"}, {"c": "toneel", "j": "2016", "t": "Jamal", "m": "Liesbeth Coltof, De Toneelmakerij"}, {"c": "toneel", "j": "2015-2016", "t": "Lief en leed in het leven van de giraf", "m": "Paul Knieriem, De Toneelmakerij"}, {"c": "toneel", "j": "2014-2015", "t": "Het Begin van Alles", "m": "Liesbeth Coltof, De Toneelmakerij"}, {"c": "toneel", "j": "2014-2015", "t": "De Tantes", "m": "Paul Knieriem, De Toneelmakerij"}, {"c": "toneel", "j": "2013-2014", "t": "Wijkproject", "m": "Liesbeth Coltof, De Toneelmakerij"}, {"c": "toneel", "j": "2013-2014", "t": "Ontspoord", "m": "Liesbeth Coltof, De Toneelmakerij"}, {"c": "toneel", "j": "2013-2014", "t": "De Storm", "m": "reprise, Liesbeth Coltof, De Toneelmakerij &amp; Firma Rieks Swart"}, {"c": "toneel", "j": "2012-2013", "t": "Kiezel", "m": "reprise, Domenico Mertens, De Toneelmakerij"}, {"c": "toneel", "j": "2012-2013", "t": "Pinokkio", "m": "Liesbeth Coltof, De Toneelmakerij"}, {"c": "toneel", "j": "2011-2012", "t": "Mehmet de Veroveraar", "m": "Liesbeth Coltof, De Toneelmakerij"}, {"c": "toneel", "j": "2011-2012", "t": "Boevenkoning", "m": "Ad de Bont, De Toneelmakerij"}, {"c": "toneel", "j": "2010-2011", "t": "Kiezel", "m": "Domenico Mertens"}, {"c": "toneel", "j": "2010-2011", "t": "De Storm", "m": "Liesbeth Coltof, De Toneelmakerij &amp; Firma Rieks Swart"}, {"c": "toneel", "j": "2009-2010", "t": "Human Cargo", "m": "Liesbeth Coltof, De Toneelmakerij"}, {"c": "toneel", "j": "2009-2010", "t": "Thaibox Verdriet", "m": "Liesbeth Coltof, De Toneelmakerij"}, {"c": "toneel", "j": "2009-2010", "t": "Kees de Jongen", "m": "Liesbeth Coltof, De Toneelmakerij"}, {"c": "toneel", "j": "2009-2010", "t": "Bang!", "m": "Roel Adam, De Toneelmakerij"}, {"c": "toneel", "j": "2008-2009", "t": "Batte", "m": "Liesbeth Coltof, Huis aan de Amstel"}, {"c": "musical", "j": "2008-2009", "t": "Annie", "m": "Tarkan Köroglu, Theatergroep Wederzijds"}, {"c": "toneel", "j": "2007-2008", "t": "Arabische Nacht", "m": "Bert Geurkink, Huis aan de Amstel"}, {"c": "toneel", "j": "2007-2008", "t": "Bombay", "m": "Liesbeth Coltof, Huis aan de Amstel"}, {"c": "toneel", "j": "2007-2008", "t": "Thom Pain", "m": "reprise (solo), Muriël Besemer, Huis aan de Amstel"}, {"c": "toneel", "j": "2007-2008", "t": "Vernon God Little", "m": "reprise, Liesbeth Coltof, Huis aan de Amstel"}, {"c": "toneel", "j": "2006-2007", "t": "Sukkels", "m": "Peter de Graef, Huis aan de Amstel"}, {"c": "toneel", "j": "2006-2007", "t": "Quarantaine", "m": "Liesbeth Coltof, Huis aan de Amstel"}, {"c": "toneel", "j": "2006-2007", "t": "Thom Pain (solo)", "m": "Muriël Besemer, Huis aan de Amstel"}, {"c": "toneel", "j": "2005-2006", "t": "Ziek", "m": "Liesbeth Coltof, Huis aan de Amstel"}, {"c": "toneel", "j": "2005-2006", "t": "Tot jij mij ziet", "m": "Jaap Spijkers, Huis aan de Amstel"}, {"c": "toneel", "j": "2004-2005", "t": "Don Carlos", "m": "Liesbeth Coltof, Huis aan de Amstel"}, {"c": "toneel", "j": "2004-2005", "t": "Een pak slaag omdat je een aap bent", "m": "Bram Huijten, Theaterschool"}, {"c": "toneel", "j": "2004-2005", "t": "Vernon God Little", "m": "Liesbeth Coltof, Huis aan de Amstel"}, {"c": "toneel", "j": "2004-2005", "t": "Parcival", "m": "reprise, Liesbeth Coltof, Huis aan de Amstel"}, {"c": "toneel", "j": "2003-2004", "t": "Kassandra", "m": "Liesbeth Coltof, Huis aan de Amstel/Toneelschuur"}, {"c": "toneel", "j": "2003-2004", "t": "Parcival", "m": "Liesbeth Coltof, Huis aan de Amstel"}, {"c": "toneel", "j": "2002-2003", "t": "Brandkoorts", "m": "Liesbeth Coltof, De Theatercompagnie"}, {"c": "toneel", "j": "2002-2003", "t": "Meisjes zijn niks", "m": "Liesbeth Coltof, Huis aan de Amstel"}, {"c": "toneel", "j": "2001-2002", "t": "De dag dat mijn broer niet thuiskwam", "m": "Liesbeth Coltof, Huis aan de Amstel"}, {"c": "toneel", "j": "2001-2002", "t": "Stervelingen", "m": "Gijs de Lange, Het Toneel Speelt"}, {"c": "toneel", "j": "2001-2002", "t": "Wie is er bang voor Virginia Woolf?", "m": "Lodewijk de Boer, Hummelinck Stuurman"}, {"c": "toneel", "j": "1999-2000", "t": "Kasimir en Karoline", "m": "Guy Cassiers, RO Theater"}, {"c": "toneel", "j": "1999-2000", "t": "Wiseguys", "m": "Allan Zipson, Het MUZtheater"}, {"c": "toneel", "j": "1998-1999", "t": "De Schijn Bedriegt", "m": "Bart Danckaert, Toneelschuur"}, {"c": "toneel", "j": "1998-1999", "t": "Even hup en: Geluk", "m": "Alphenaar, Bellevue"}, {"c": "toneel", "j": "1998-1999", "t": "Volgens Myra", "m": "Christiaan Nortier, Mithras Produkties BV"}, {"c": "toneel", "j": "1998-1999", "t": "Driekoningenavond", "m": "Gijs de Lange, Theaterschool"}, {"c": "toneel", "j": "1998-1999", "t": "Vast!", "m": "Mariëtte Cigaar, Theaterschool"}, {"c": "toneel", "j": "1997-1998", "t": "Wanja", "m": "Victor Löw, Theaterschool"}, {"c": "toneel", "j": "1996-1997", "t": "Gin", "m": "Diederik Ebbinge, Theaterschool"}, {"c": "toneel", "j": "1996-1997", "t": "Dit is de dag die ik vervloek, maar niet ontlopen kan", "m": "Agaath Witteman, Theaterschool"}, {"c": "commercial", "j": "", "t": "Specsavers", "m": ""}, {"c": "commercial", "j": "", "t": "Belastingdienst ‘het Gemakslab’", "m": ""}, {"c": "commercial", "j": "", "t": "Heineken Campagne ‘Ton de solo zeiler’", "m": ""}, {"c": "stem", "j": "2014", "t": "Gelukkig ben ik gelukkig", "m": "voice-over"}, {"c": "stem", "j": "", "t": "CZ", "m": "commercial (stem)"}, {"c": "stem", "j": "", "t": "Disney", "m": "commercial (stem)"}, {"c": "stem", "j": "", "t": "Heineken", "m": "commercial (stem)"}, {"c": "stem", "j": "", "t": "McDonald's", "m": "commercial (stem)"}];
+const groepen = [
+  {k:"film", n:"Film", c:["film"]}, {k:"tv", n:"Tv", c:["tv"]}, {k:"toneel", n:"Toneel", c:["toneel"]},
+  {k:"musical", n:"Musical", c:["musical"]}, {k:"stem", n:"Stem & commercials", c:["stem","commercial"]},
+];
+const ZICHTBAAR = 12; let groep = "film", alles = false;
+const tabs = document.getElementById("tabs"), lijst = document.getElementById("lijst"), meer = document.getElementById("meer");
+tabs.innerHTML = groepen.map(g => `<button data-k="${g.k}" aria-pressed="${g.k === groep}">${g.n}<span>${cv.filter(r => g.c.includes(r.c)).length}</span></button>`).join("");
+function toonCv(){
+  const g = groepen.find(x => x.k === groep), rijen = cv.filter(r => g.c.includes(r.c));
+  const zicht = alles ? rijen : rijen.slice(0, ZICHTBAAR);
+  lijst.innerHTML = zicht.map(r => `<tr><td class="jaar">${r.j}</td><td class="titel">${r.t}</td><td class="maker">${r.m}</td></tr>`).join("");
+  meer.hidden = rijen.length <= ZICHTBAAR;
+  meer.textContent = alles ? "Toon minder" : `Toon alle ${rijen.length}`;
+}
+tabs.addEventListener("click", e => { const b = e.target.closest("button"); if (!b) return; groep = b.dataset.k; alles = false;
+  tabs.querySelectorAll("button").forEach(x => x.setAttribute("aria-pressed", x === b)); toonCv(); });
+meer.addEventListener("click", () => { alles = !alles; toonCv(); if (!alles) document.getElementById("cv").scrollIntoView(); });
+toonCv();
+
+document.getElementById("jaar").textContent = new Date().getFullYear();
+const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); } }), {threshold:.12});
 document.querySelectorAll(".verschijn").forEach(el => io.observe(el));

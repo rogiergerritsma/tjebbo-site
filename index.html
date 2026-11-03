@@ -2,11 +2,14 @@
 <html lang="nl">
 <head>
 <meta charset="utf-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; font-src 'self'; img-src 'self' data:; media-src 'self'; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; font-src 'self'; img-src 'self' data:; media-src 'self'; connect-src 'self'; frame-src https://player.vimeo.com; object-src 'none'; base-uri 'self'; form-action 'none'">
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Tjebbo Gerritsma — acteur, toneel, musical, film &amp; tv, stem</title>
-<meta name="description" content="Tjebbo Gerritsma, acteur en stemacteur. Showreel, voicereel en cv.">
+<meta name="description" content="Tjebbo Gerritsma, acteur en stemacteur. Showreel, voicereel, foto's en cv.">
+<meta property="og:title" content="Tjebbo Gerritsma">
+<meta property="og:description" content="Acteur / toneel / musical / film &amp; tv / stem">
+<meta property="og:image" content="foto/portret-1.webp">
 <link rel="icon" href="tg.svg" type="image/svg+xml">
 <link rel="stylesheet" href="assets/fonts.css">
 <link rel="stylesheet" href="assets/style.css">
@@ -22,8 +25,9 @@
       <li><a href="#showreel">Showreel</a></li>
       <li><a href="#stem">Voicereel</a></li>
       <li class="optioneel"><a href="#over">Over</a></li>
+      <li><a href="#fotos">Foto's</a></li>
       <li><a href="#cv">Cv</a></li>
-      <li><a href="#contact">Contact</a></li>
+      <li class="optioneel"><a href="#contact">Contact</a></li>
     </ul>
   </div>
 </header>
@@ -34,10 +38,10 @@
     <h1>Tjebbo Gerritsma</h1>
     <span class="vak">Acteur / toneel / musical / film &amp; tv / stem</span>
   </div>
-  <div class="doek" role="button" tabindex="0" aria-label="Showreel afspelen (volgt)">
-    <img src="tjebbo.webp" alt="">
+  <div class="doek" id="doek" role="button" tabindex="0" aria-label="Showreel afspelen">
+    <img src="foto/showreel-poster.webp" alt="">
     <div class="speel"><svg viewBox="0 0 24 24" fill="#111"><path d="M6 4l14 8-14 8z"/></svg></div>
-    <span class="bijschrift" id="bijschrift">Showreel</span>
+    <span class="bijschrift">Showreel</span>
   </div>
 </div>
 
@@ -46,46 +50,58 @@
     <span class="label">Voicereel</span>
     <h2>De stem van Tjebbo</h2>
     <div class="speler verschijn">
-      <button class="grootspeel" id="grootspeel" aria-label="Voicereel afspelen">
+      <button class="grootspeel" id="grootspeel" aria-label="Afspelen">
         <svg class="ic-speel" viewBox="0 0 24 24"><path d="M7 4l13 8-13 8z" fill="currentColor"/></svg>
         <svg class="ic-pauze" viewBox="0 0 24 24"><path d="M7 4h4v16H7zM13 4h4v16h-4z" fill="currentColor"/></svg>
       </button>
       <div class="golfvak">
-        <div class="nu"><span id="nuTitel">Voicereel</span><span id="nuTijd">0:00</span></div>
+        <div class="nu"><span id="nuTitel">CZ</span><span id="nuTijd">0:00</span></div>
         <div class="golf" id="golf" aria-hidden="true"></div>
-        <div class="melding" id="melding" role="status"></div>
       </div>
     </div>
     <ul class="fragmenten" id="fragmenten"></ul>
-    <audio id="audio" preload="none"></audio>
+    <audio id="audio" preload="metadata"></audio>
   </div>
 </section>
 
 <section id="over">
   <div class="wrap over">
-    <img class="verschijn" src="tjebbo.webp" alt="Portret van Tjebbo Gerritsma" width="900" height="1300" loading="lazy">
+    <img class="verschijn" src="foto/portret-1-klein.webp" alt="Portret van Tjebbo Gerritsma door Roger Neve" width="467" height="700" loading="lazy">
     <div class="verschijn">
       <span class="label">Over</span>
       <h2>Acteur op toneel, in musicals, film en tv. En een stem die je vaak hoort.</h2>
-      <p>Tjebbo Gerritsma (1972) studeerde in 1999 af aan de Toneelschool Amsterdam. Jarenlang hoorde hij bij de vaste kern van De Toneelmakerij, als speler en als maker. Hij speelde in musicals als Annie en Anatevka.</p>
-      <p>Op het scherm was hij te zien in onder meer Zwartboek, Riphagen, Bankier van het Verzet en Zomer in Frankrijk, en in series als Smeris, Toren C en Judas. Daarnaast doet hij veel stemwerk: voice-overs, commercials en nasynchronisaties.</p>
+      <p>Tjebbo Gerritsma studeerde in 1999 af aan de Toneelschool Amsterdam. Jarenlang hoorde hij bij de vaste cast en het creatieve team van De Toneelmakerij, met rollen in onder meer De dag dat mijn broer niet thuiskwam, De tantes, De storm en Thaibox verdriet. Hij speelde in Wie is er bang voor Virginia Woolf? en liet zijn muzikale kant zien in Annie en Fiddler on the Roof.</p>
+      <p>Op film was hij te zien in onder meer Zwartboek, Mijn bijzonder rare week met Tess, Schone handen, Bankier van het Verzet en Soof 2. In 2022 speelde hij de hoofdrol in Zomer in Frankrijk; in 2026 volgt Hanna van Hendrik. Op televisie speelde hij in Voetbalmaffia, Smeris, Toren C, Judas, Dertigers en Nieuw zeer, en recent in Maud &amp; Babs, Tropenjaren, Ten minste houdbaar tot en Het gouden uur. Daarnaast is zijn stem te horen in commercials en voice-overs.</p>
+      <dl class="details">
+        <div><dt>Geboren</dt><dd>1972</dd></div>
+        <div><dt>Lengte</dt><dd>1,84 m</dd></div>
+        <div><dt>Talen</dt><dd>NL, EN, DE, FR</dd></div>
+      </dl>
     </div>
+  </div>
+</section>
+
+<section id="fotos">
+  <div class="wrap">
+    <span class="label">Foto's</span>
+    <div class="raster" id="raster"></div>
+    <p class="credit">Portretten: Roger Neve</p>
   </div>
 </section>
 
 <section id="cv">
   <div class="wrap">
     <span class="label">Cv</span>
-    <div class="tabs" role="group" aria-label="Filter cv">
-      <button aria-pressed="true" data-filter="alle">Alles</button>
-      <button aria-pressed="false" data-filter="toneel">Toneel</button>
-      <button aria-pressed="false" data-filter="musical">Musical</button>
-      <button aria-pressed="false" data-filter="film">Film</button>
-      <button aria-pressed="false" data-filter="tv">Tv</button>
-      <button aria-pressed="false" data-filter="stem">Stem</button>
+    <div class="cvkop">
+      <h2>Rollen en producties</h2>
+      <a class="download" href="cv-tjebbo-gerritsma.pdf" target="_blank" rel="noopener" download="Cv Tjebbo Gerritsma.pdf">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></svg>
+        Cv als pdf
+      </a>
     </div>
+    <div class="tabs" role="group" aria-label="Kies onderdeel" id="tabs"></div>
     <table class="cv"><tbody id="lijst"></tbody></table>
-    <p class="voetnoot">Een selectie. Het volledige cv volgt.</p>
+    <button class="meer" id="meer" hidden></button>
   </div>
 </section>
 
@@ -118,11 +134,20 @@
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r=".6" fill="currentColor"/></svg>
         Instagram
       </a>
+      <a href="https://www.imdb.com/name/nm0314764/">IMDb</a>
       <a href="https://www.allstarsagency.nl/tjebbo-gerritsma">All Stars Agency</a>
     </div>
-    <a class="maker" href="https://bureaugerritsma.nl" aria-label="Website: Bureau Gerritsma"><img src="bureau-gerritsma.svg" alt="Bureau Gerritsma" width="105" height="22"></a>
+    <a class="maker-bg" href="https://bureaugerritsma.nl" aria-label="Website: Bureau Gerritsma"><img src="bureau-gerritsma.svg" alt="Bureau Gerritsma" width="105" height="22"></a>
   </div>
 </footer>
+
+<div class="lichtbak" id="lichtbak" role="dialog" aria-modal="true" aria-label="Foto">
+  <button class="lb-knop lb-dicht" id="lbDicht" aria-label="Sluiten"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+  <button class="lb-knop lb-vorige" id="lbVorige" aria-label="Vorige"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M15 6l-6 6 6 6"/></svg></button>
+  <img id="lbBeeld" alt="">
+  <button class="lb-knop lb-volgende" id="lbVolgende" aria-label="Volgende"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></button>
+  <p id="lbTekst"></p>
+</div>
 
 <script src="assets/site.js" defer></script>
 </body>
