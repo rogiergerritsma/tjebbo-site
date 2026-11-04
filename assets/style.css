@@ -1,6 +1,5 @@
 :root{color-scheme:light;--wit:#FFFFFF;--inkt:#111111;--grijs:#8A8A8A;--licht:#C9C9C9;--lijn:#EAEAEA;--vlak:#F4F4F4;--blauw:#6CCBFF;--op-blauw:#111111;--op-inkt:#FFFFFF;--kop:rgba(255,255,255,.94);--bak:rgba(255,255,255,.97);--zacht-blauw:rgba(108,203,255,.12)}
 :root[data-thema="donker"]{color-scheme:dark;--wit:#12171D;--inkt:#ECEFF3;--grijs:#8E99A6;--licht:#3A4552;--lijn:#252D37;--vlak:#1A2129;--kop:rgba(18,23,29,.92);--bak:rgba(18,23,29,.97);--op-inkt:#12171D;--zacht-blauw:rgba(108,203,255,.14)}
-@media (prefers-color-scheme:dark){:root:not([data-thema]){color-scheme:dark;--wit:#12171D;--inkt:#ECEFF3;--grijs:#8E99A6;--licht:#3A4552;--lijn:#252D37;--vlak:#1A2129;--kop:rgba(18,23,29,.92);--bak:rgba(18,23,29,.97);--op-inkt:#12171D;--zacht-blauw:rgba(108,203,255,.14)}}
 body{transition:background-color .3s,color .3s}
 .logo-donker{display:none}
 :root[data-thema="donker"] .logo-licht{display:none}
