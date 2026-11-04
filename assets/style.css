@@ -64,6 +64,12 @@ h2{font-weight:600;font-size:clamp(26px,3.2vw,38px);line-height:1.15;letter-spac
 .fragmenten li{display:flex;justify-content:space-between;gap:16px;padding:16px 4px;border-bottom:1px solid var(--lijn);cursor:pointer;transition:padding .25s}
 .fragmenten li.actief{box-shadow:inset 3px 0 0 var(--blauw);padding-left:14px}
 .fragmenten li.actief span:first-child{font-weight:600}
+.prijs{display:flex;gap:clamp(18px,3vw,32px);align-items:flex-start;margin-top:48px;padding-top:32px;border-top:1px solid var(--lijn)}
+.prijs img{flex:none;width:120px;height:120px;border-radius:22%;box-shadow:0 6px 24px rgba(0,0,0,.18)}
+:root[data-thema="donker"] .prijs img{box-shadow:0 0 0 1px var(--licht)}
+.prijs-label{display:block;font-size:13px;font-weight:500;color:var(--grijs);letter-spacing:.04em;text-transform:uppercase}
+.prijs h3{font-weight:600;font-size:24px;margin:6px 0 8px}
+.prijs p{max-width:60ch;margin-bottom:14px}
 .fragmenten small{color:var(--grijs);font-size:14px;font-variant-numeric:tabular-nums}
 
 /* over */
@@ -130,6 +136,7 @@ footer{border-top:3px solid var(--blauw);padding:28px 0 36px;font-size:14px;colo
 .verschijn.in{opacity:1;transform:none}
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.verschijn{opacity:1;transform:none}}
 @media(max-width:640px){
+.prijs{flex-direction:column}.prijs img{width:96px;height:96px}
   .kop{height:64px}.tg{width:39px;height:26px}
   .menu{gap:12px}.menu a{font-size:13px}.menu .optioneel{display:none}
   .speel{width:68px;height:68px}
