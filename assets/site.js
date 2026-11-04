@@ -56,7 +56,8 @@ audio.addEventListener("timeupdate", () => {
 
 // foto's
 const fotos = [
-  {f:"portret-polo", t:"Portret"}, {f:"portret-lach", t:"Portret"},
+  {f:"portret-lach", t:"Portret"}, {f:"portret-polo", t:"Portret"},
+  {f:"portret-lach-kleur", t:"Portret"}, {f:"portret-polo-kleur", t:"Portret"},
   {f:"portret-1", t:"Portret — Roger Neve"}, {f:"still-hanna-van-hendrik", t:"Hanna van Hendrik"},
   {f:"portret-2", t:"Portret — Roger Neve"}, {f:"portret-3", t:"Portret — Roger Neve"},
   {f:"productie-1", t:""}, {f:"portret-5", t:"Portret — Roger Neve"},
@@ -64,8 +65,23 @@ const fotos = [
   {f:"productie-2", t:""}, {f:"portret-6", t:"Portret — Roger Neve"},
   {f:"still-riphagen", t:"Riphagen"}, {f:"portret-7", t:"Portret — Roger Neve"}, {f:"portret-8", t:"Portret — Roger Neve"},
 ];
-document.getElementById("raster").innerHTML = fotos.map((p, i) =>
-  `<figure data-i="${i}"><img src="foto/${p.f}-klein.webp" alt="${p.t || "Tjebbo Gerritsma"}" loading="lazy">${p.t ? `<figcaption>${p.t}</figcaption>` : ""}</figure>`).join("");
+const raster = document.getElementById("raster");
+const figuren = fotos.map((p, i) => {
+  const fig = document.createElement("figure"); fig.dataset.i = i;
+  const img = document.createElement("img"); img.src = "foto/" + p.f + "-klein.webp"; img.alt = p.t || "Tjebbo Gerritsma"; img.loading = "lazy";
+  fig.appendChild(img);
+  if (p.t) { const fc = document.createElement("figcaption"); fc.textContent = p.t; fig.appendChild(fc); }
+  return fig;
+});
+let kolommenNu = 0;
+function verdeel(){
+  const n = window.innerWidth < 640 ? 2 : 3;
+  if (n === kolommenNu) return; kolommenNu = n;
+  raster.replaceChildren();
+  const kol = Array.from({length:n}, () => { const d = document.createElement("div"); d.className = "kolom"; raster.appendChild(d); return d; });
+  figuren.forEach((f, i) => kol[i % n].appendChild(f));
+}
+verdeel(); window.addEventListener("resize", verdeel);
 const lb = document.getElementById("lichtbak"), lbBeeld = document.getElementById("lbBeeld"), lbTekst = document.getElementById("lbTekst");
 let lbI = 0;
 function toon(i){ lbI = (i + fotos.length) % fotos.length; lbBeeld.src = "foto/" + fotos[lbI].f + ".webp"; lbBeeld.alt = fotos[lbI].t || "Tjebbo Gerritsma"; lbTekst.textContent = fotos[lbI].t; }
