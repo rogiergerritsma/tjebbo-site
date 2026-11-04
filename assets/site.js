@@ -56,6 +56,7 @@ audio.addEventListener("timeupdate", () => {
 
 // foto's
 const fotos = [
+  {f:"portret-polo", t:"Portret"}, {f:"portret-lach", t:"Portret"},
   {f:"portret-1", t:"Portret — Roger Neve"}, {f:"still-hanna-van-hendrik", t:"Hanna van Hendrik"},
   {f:"portret-2", t:"Portret — Roger Neve"}, {f:"portret-3", t:"Portret — Roger Neve"},
   {f:"productie-1", t:""}, {f:"portret-5", t:"Portret — Roger Neve"},
