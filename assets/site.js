@@ -1,3 +1,5 @@
+document.getElementById("themaknop").addEventListener("click", () => window.wisselThema());
+
 // showreel: Vimeo pas laden na klik
 const doek = document.getElementById("doek");
 function speelShowreel(){
